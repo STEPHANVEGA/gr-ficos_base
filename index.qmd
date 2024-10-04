@@ -1,12 +1,35 @@
+---
+title: Gráficos_Base
+subtitle: "Curso"
+date: "2024-10-03"
+author: Stefanny Vega
+format: 
+  html:
+    toc:   true
+theme: yeti
+lang: es	
+
+editor: visual
+---
+
+```{r}
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
 ##Gráfico del sistema de base de R
 ## Gráfico de Dispersión
 
 Muestra la relación entre dos variables númericas
 
 ```{r}
+#| label: Gráfico-dispersión-cars
+#| code-fold: true
 plot(cars)
 ```
-## Relación entre entre longitud y ancho de los petalos de las flores de genero "iris"
+## Relación entre entre longitud y ancho de los petalos de las flores de genero iris
 ```{r}
 plot(
   x = iris$Petal.Length,
@@ -35,3 +58,27 @@ You can add options to executable code like this
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
+
+# Gráfico de dispersión de longitud del pico vs masa (peso)
+penguins |>
+  ggplot(aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(size = 4) +
+  geom_smooth(method = "loess", se = FALSE) +
+  ggtitle("Longitud del pico vs. masa") +
+  xlab("Longitud del pico (mm)") +
+  ylab("Masa (g)") +
+  labs(color = "Especie", shape = "Especie")
+
+## relacion entre la longitud del pico y la masa de pingüinos en espacio 
+penguins |>
+  ggplot(aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species),
+             size = 2) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
+  scale_color_manual(values = c("darkorange", "darkorchid", "cyan4")) +
+  ggtitle("Longitud del pico vs. masa por especie") +
+  xlab("Longitud del pico (mm)") +
+  ylab("Masa (g)") +
+  labs(color = "Especie", shape = "Especie")
+  
